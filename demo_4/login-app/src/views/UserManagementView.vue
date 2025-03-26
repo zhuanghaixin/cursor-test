@@ -1,198 +1,225 @@
 <template>
     <div class="user-management-container">
+        <!-- 顶部导航栏 -->
         <header class="dashboard-header">
             <div class="logo">
-                <span class="logo-design">Design</span><span class="logo-code">Code</span> <span class="hq">HQ</span>
+                <span class="logo-design">Design</span>
+                <span class="logo-code">Code</span>
+                <span class="logo-progress">Progress</span>
+                <span class="hq">HQ</span>
             </div>
             <div class="user-menu">
-                <span v-if="authStore.user">{{ authStore.user.name }}</span>
-                <button @click="logout" class="logout-button">退出登录</button>
+                <span>{{ currentUser?.name }}</span>
+                <button @click="logout" class="logout-button">退出</button>
             </div>
         </header>
 
-        <main class="content">
-            <div class="content-header">
+        <div class="content">
+            <div class="page-header">
                 <h1>用户管理</h1>
-                <button @click="showCreateUserModal = true" class="create-button">
+                <button v-if="isAdmin" @click="showCreateModal" class="create-button">
                     创建用户
                 </button>
             </div>
 
             <!-- 用户列表 -->
-            <div class="users-list" v-if="!isLoading">
-                <div class="user-card" v-for="user in users" :key="user.id">
-                    <div class="user-info">
-                        <h3>{{ user.name }}</h3>
-                        <p>{{ user.email }}</p>
-                        <p class="user-role">角色: {{ user.role || '普通用户' }}</p>
-                    </div>
-                    <div class="user-actions">
-                        <button @click="editUser(user)" class="edit-button">编辑</button>
-                        <button @click="confirmDelete(user)" class="delete-button">删除</button>
-                    </div>
-                </div>
+            <div class="users-table" v-if="!loading">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>姓名</th>
+                            <th>邮箱</th>
+                            <th>角色</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="user in users" :key="user.id">
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.role === 'admin' ? '管理员' : '普通用户' }}</td>
+                            <td class="actions">
+                                <button @click="editUser(user)" class="edit-button">
+                                    编辑
+                                </button>
+                                <button v-if="isAdmin && user.id !== currentUser?.id" @click="confirmDelete(user)"
+                                    class="delete-button">
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div v-else class="loading">
                 加载中...
             </div>
+        </div>
 
-            <!-- 创建/编辑用户模态框 -->
-            <div class="modal" v-if="showCreateUserModal || showEditUserModal">
-                <div class="modal-content">
-                    <h2>{{ editingUser ? '编辑用户' : '创建用户' }}</h2>
-                    <form @submit.prevent="handleSubmitUser">
-                        <div class="form-group">
-                            <label>姓名</label>
-                            <input type="text" v-model="userForm.name" required />
-                        </div>
-                        <div class="form-group">
-                            <label>邮箱</label>
-                            <input type="email" v-model="userForm.email" required />
-                        </div>
-                        <div class="form-group">
-                            <label>角色</label>
-                            <select v-model="userForm.role">
-                                <option value="user">普通用户</option>
-                                <option value="admin">管理员</option>
-                            </select>
-                        </div>
-                        <div class="form-group" v-if="!editingUser">
-                            <label>密码</label>
-                            <input type="password" v-model="userForm.password" required />
-                        </div>
-                        <div class="modal-actions">
-                            <button type="submit" class="submit-button">
-                                {{ editingUser ? '保存' : '创建' }}
-                            </button>
-                            <button type="button" @click="closeModal" class="cancel-button">
-                                取消
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- 删除确认模态框 -->
-            <div class="modal" v-if="showDeleteModal">
-                <div class="modal-content">
-                    <h2>确认删除</h2>
-                    <p>确定要删除用户 "{{ userToDelete?.name }}" 吗？此操作不可撤销。</p>
+        <!-- 创建/编辑用户模态框 -->
+        <div class="modal" v-if="showModal">
+            <div class="modal-content">
+                <h2>{{ editingUser ? '编辑用户' : '创建用户' }}</h2>
+                <form @submit.prevent="handleSubmit">
+                    <div class="form-group">
+                        <label>姓名</label>
+                        <input v-model="userForm.name" type="text" required placeholder="请输入姓名" />
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <input v-model="userForm.email" type="email" required placeholder="请输入邮箱" />
+                    </div>
+                    <div class="form-group" v-if="!editingUser">
+                        <label>密码</label>
+                        <input v-model="userForm.password" type="password" required placeholder="请输入密码" />
+                    </div>
+                    <div class="form-group" v-if="isAdmin">
+                        <label>角色</label>
+                        <select v-model="userForm.role">
+                            <option value="user">普通用户</option>
+                            <option value="admin">管理员</option>
+                        </select>
+                    </div>
                     <div class="modal-actions">
-                        <button @click="handleDeleteUser" class="delete-button">
-                            确认删除
+                        <button type="submit" class="submit-button">
+                            {{ editingUser ? '保存' : '创建' }}
                         </button>
-                        <button @click="showDeleteModal = false" class="cancel-button">
+                        <button type="button" @click="closeModal" class="cancel-button">
                             取消
                         </button>
                     </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 删除确认模态框 -->
+        <div class="modal" v-if="showDeleteModal">
+            <div class="modal-content">
+                <h2>确认删除</h2>
+                <p>确定要删除用户 "{{ userToDelete?.name }}" 吗？此操作不可撤销。</p>
+                <div class="modal-actions">
+                    <button @click="handleDelete" class="delete-button">
+                        确认删除
+                    </button>
+                    <button @click="showDeleteModal = false" class="cancel-button">
+                        取消
+                    </button>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 </template>
 
-<script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+<script setup lang="ts">
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
-import { useUserStore } from '@/stores/user';
+import axios from 'axios';
 
 interface User {
     id: string;
     name: string;
     email: string;
-    role?: string;
-}
-
-interface UserForm {
-    name: string;
-    email: string;
-    password?: string;
     role: string;
 }
 
 const router = useRouter();
 const authStore = useAuthStore();
-const userStore = useUserStore();
 
 const users = ref<User[]>([]);
-const isLoading = ref(true);
-const showCreateUserModal = ref(false);
-const showEditUserModal = ref(false);
+const loading = ref(true);
+const showModal = ref(false);
 const showDeleteModal = ref(false);
 const editingUser = ref<User | null>(null);
 const userToDelete = ref<User | null>(null);
+const currentUser = computed(() => authStore.user);
+const isAdmin = computed(() => currentUser.value?.role === 'admin');
 
-const userForm = ref<UserForm>({
+const userForm = ref({
     name: '',
     email: '',
     password: '',
     role: 'user'
 });
 
-onMounted(async () => {
+// 获取用户列表
+async function fetchUsers() {
     try {
-        users.value = await userStore.fetchUsers();
+        const response = await axios.get('/api/users');
+        users.value = response.data;
     } catch (error) {
         console.error('Failed to fetch users:', error);
     } finally {
-        isLoading.value = false;
+        loading.value = false;
     }
-});
-
-function logout() {
-    authStore.logout();
-    router.push('/login');
 }
 
+// 显示创建用户模态框
+function showCreateModal() {
+    editingUser.value = null;
+    userForm.value = {
+        name: '',
+        email: '',
+        password: '',
+        role: 'user'
+    };
+    showModal.value = true;
+}
+
+// 显示编辑用户模态框
 function editUser(user: User) {
     editingUser.value = user;
     userForm.value = {
         name: user.name,
         email: user.email,
-        role: user.role || 'user'
+        password: '',
+        role: user.role
     };
-    showEditUserModal.value = true;
+    showModal.value = true;
 }
 
+// 确认删除用户
 function confirmDelete(user: User) {
     userToDelete.value = user;
     showDeleteModal.value = true;
 }
 
-async function handleSubmitUser() {
+// 提交表单
+async function handleSubmit() {
     try {
         if (editingUser.value) {
-            await userStore.updateUser({
-                id: editingUser.value.id,
-                ...userForm.value
-            });
+            // 更新用户
+            await axios.put(`/api/users/${editingUser.value.id}`, userForm.value);
         } else {
-            await userStore.createUser(userForm.value);
+            // 创建用户
+            await axios.post('/api/users', userForm.value);
         }
+        await fetchUsers();
         closeModal();
-        users.value = await userStore.fetchUsers();
-    } catch (error) {
-        console.error('Failed to save user:', error);
+    } catch (error: any) {
+        alert(error.response?.data?.message || '操作失败');
     }
 }
 
-async function handleDeleteUser() {
+// 删除用户
+async function handleDelete() {
     if (!userToDelete.value) return;
 
     try {
-        await userStore.deleteUser(userToDelete.value.id);
+        await axios.delete(`/api/users/${userToDelete.value.id}`);
         users.value = users.value.filter(u => u.id !== userToDelete.value?.id);
         showDeleteModal.value = false;
-    } catch (error) {
-        console.error('Failed to delete user:', error);
+    } catch (error: any) {
+        alert(error.response?.data?.message || '删除失败');
     }
 }
 
+// 关闭模态框
 function closeModal() {
-    showCreateUserModal.value = false;
-    showEditUserModal.value = false;
+    showModal.value = false;
     editingUser.value = null;
     userForm.value = {
         name: '',
@@ -201,6 +228,16 @@ function closeModal() {
         role: 'user'
     };
 }
+
+// 退出登录
+function logout() {
+    authStore.logout();
+    router.push('/login');
+}
+
+onMounted(() => {
+    fetchUsers();
+});
 </script>
 
 <style scoped>
@@ -236,9 +273,16 @@ function closeModal() {
     color: transparent;
 }
 
+.logo-progress {
+    background: linear-gradient(to right, #9DE1E5, #B8DFB2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
 .hq {
     color: #3672F8;
-    margin-left: 8px;
+    margin-left: 4px;
 }
 
 .content {
@@ -247,11 +291,17 @@ function closeModal() {
     margin: 0 auto;
 }
 
-.content-header {
+.page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 24px;
+    color: #212529;
+    margin: 0;
 }
 
 .create-button {
@@ -264,45 +314,39 @@ function closeModal() {
     font-weight: 600;
 }
 
-.users-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-.user-card {
+.users-table {
     background: white;
     border-radius: 8px;
-    padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+}
+
+.actions {
     display: flex;
-    justify-content: space-between;
-}
-
-.user-info h3 {
-    margin: 0 0 10px;
-    color: #212C4F;
-}
-
-.user-info p {
-    margin: 5px 0;
-    color: #666;
-}
-
-.user-role {
-    font-size: 0.9em;
-    color: #888;
-}
-
-.user-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .edit-button,
 .delete-button {
-    padding: 8px 15px;
+    padding: 6px 12px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -310,8 +354,8 @@ function closeModal() {
 }
 
 .edit-button {
-    background-color: #56CCF2;
-    color: white;
+    background-color: #e9ecef;
+    color: #495057;
 }
 
 .delete-button {
@@ -341,7 +385,7 @@ function closeModal() {
 
 .modal-content h2 {
     margin: 0 0 20px;
-    color: #212C4F;
+    color: #212529;
 }
 
 .form-group {
@@ -350,15 +394,16 @@ function closeModal() {
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
-    color: #666;
+    margin-bottom: 8px;
+    color: #495057;
+    font-weight: 500;
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #ced4da;
     border-radius: 4px;
     font-size: 16px;
 }

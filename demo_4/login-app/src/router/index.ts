@@ -1,85 +1,76 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import { useAuthStore } from '@/stores/auth'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import ForgotPasswordView from '@/views/ForgotPasswordView.vue'
 import UserManagementView from '@/views/UserManagementView.vue'
+import DashboardView from '@/views/DashboardView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/dashboard'
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
+      meta: { requiresGuest: true }
     },
     {
       path: '/register',
       name: 'register',
-      component: RegisterView
+      component: RegisterView,
+      meta: { requiresGuest: true }
     },
     {
       path: '/forgot-password',
       name: 'forgot-password',
-      component: ForgotPasswordView
+      component: ForgotPasswordView,
+      meta: { requiresGuest: true }
     },
     {
       path: '/user-management',
       name: 'user-management',
       component: UserManagementView,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: () => import('../views/DashboardView.vue'),
+      component: DashboardView,
       meta: { requiresAuth: true }
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue'),
-      meta: { requiresAuth: true }
-    },
-  ],
+    }
+  ]
 })
 
 // 导航守卫
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  const isAuthenticated = authStore.isAuthenticated()
+  const isAdmin = authStore.user?.role === 'admin'
 
-  // 如果路由需要认证
-  if (requiresAuth) {
-    // 检查是否已登录
-    if (!authStore.token) {
-      // 未登录，重定向到登录页
-      next({ name: 'login', query: { redirect: to.fullPath } })
-      return
-    }
-
-    try {
-      // 验证 token 是否有效
-      await authStore.fetchCurrentUser()
-      next()
-    } catch (error) {
-      // token 无效，重定向到登录页
-      next({ name: 'login', query: { redirect: to.fullPath } })
-    }
-  } else {
-    // 不需要认证的路由
-    if (authStore.token && (to.name === 'login' || to.name === 'register')) {
-      // 已登录用户访问登录/注册页，重定向到用户管理页
-      next({ name: 'user-management' })
-      return
-    }
-    next()
+  // 需要登录的页面
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next('/login')
+    return
   }
+
+  // 需要管理员权限的页面
+  if (to.meta.requiresAdmin && !isAdmin) {
+    next('/dashboard')
+    return
+  }
+
+  // 已登录用户不能访问的页面（如登录、注册页）
+  if (to.meta.requiresGuest && isAuthenticated) {
+    next('/dashboard')
+    return
+  }
+
+  next()
 })
 
 export default router

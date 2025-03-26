@@ -146,6 +146,121 @@ function authenticateToken(req, res, next) {
     });
 }
 
+// 用户管理路由
+// 获取所有用户（仅管理员）
+app.get('/api/users', authenticateToken, (req, res) => {
+    // 检查是否是管理员
+    const user = users.find(u => u.id === req.user.userId);
+    if (!user || user.role !== 'admin') {
+        return res.status(403).json({ message: '需要管理员权限' });
+    }
+
+    // 返回用户列表（不包含密码）
+    const usersWithoutPasswords = users.map(({ password, ...user }) => user);
+    res.json(usersWithoutPasswords);
+});
+
+// 创建新用户（仅管理员）
+app.post('/api/users', authenticateToken, (req, res) => {
+    // 检查是否是管理员
+    const admin = users.find(u => u.id === req.user.userId);
+    if (!admin || admin.role !== 'admin') {
+        return res.status(403).json({ message: '需要管理员权限' });
+    }
+
+    const { name, email, password, role = 'user' } = req.body;
+
+    // 验证必填字段
+    if (!name || !email || !password) {
+        return res.status(400).json({ message: '姓名、邮箱和密码为必填项' });
+    }
+
+    // 检查邮箱是否已存在
+    if (users.some(u => u.email === email)) {
+        return res.status(400).json({ message: '该邮箱已被注册' });
+    }
+
+    // 创建新用户
+    const newUser = {
+        id: String(users.length + 1),
+        name,
+        email,
+        password,
+        role: role === 'admin' ? 'admin' : 'user'
+    };
+
+    users.push(newUser);
+
+    // 返回新用户信息（不包含密码）
+    const { password: _, ...userWithoutPassword } = newUser;
+    res.status(201).json(userWithoutPassword);
+});
+
+// 更新用户信息（管理员可以更新所有用户，普通用户只能更新自己）
+app.put('/api/users/:id', authenticateToken, (req, res) => {
+    const { id } = req.params;
+    const currentUser = users.find(u => u.id === req.user.userId);
+
+    // 检查权限
+    if (!currentUser || (currentUser.role !== 'admin' && currentUser.id !== id)) {
+        return res.status(403).json({ message: '没有权限修改此用户信息' });
+    }
+
+    // 查找要更新的用户
+    const userIndex = users.findIndex(u => u.id === id);
+    if (userIndex === -1) {
+        return res.status(404).json({ message: '用户不存在' });
+    }
+
+    const { name, email, password, role } = req.body;
+    const updatedUser = { ...users[userIndex] };
+
+    // 更新字段
+    if (name) updatedUser.name = name;
+    if (email && email !== users[userIndex].email) {
+        // 检查新邮箱是否已被使用
+        if (users.some(u => u.email === email && u.id !== id)) {
+            return res.status(400).json({ message: '该邮箱已被其他用户使用' });
+        }
+        updatedUser.email = email;
+    }
+    if (password) updatedUser.password = password;
+    if (role && currentUser.role === 'admin') {
+        updatedUser.role = role === 'admin' ? 'admin' : 'user';
+    }
+
+    users[userIndex] = updatedUser;
+
+    // 返回更新后的用户信息（不包含密码）
+    const { password: _, ...userWithoutPassword } = updatedUser;
+    res.json(userWithoutPassword);
+});
+
+// 删除用户（仅管理员）
+app.delete('/api/users/:id', authenticateToken, (req, res) => {
+    // 检查是否是管理员
+    const admin = users.find(u => u.id === req.user.userId);
+    if (!admin || admin.role !== 'admin') {
+        return res.status(403).json({ message: '需要管理员权限' });
+    }
+
+    const { id } = req.params;
+
+    // 防止删除自己
+    if (id === admin.id) {
+        return res.status(400).json({ message: '不能删除当前登录的管理员账号' });
+    }
+
+    const userIndex = users.findIndex(u => u.id === id);
+    if (userIndex === -1) {
+        return res.status(404).json({ message: '用户不存在' });
+    }
+
+    // 删除用户
+    users.splice(userIndex, 1);
+    res.status(204).send();
+});
+
 // 启动服务器
 app.listen(PORT, () => {
     console.log(`后端服务器运行在 http://localhost:${PORT}`);
