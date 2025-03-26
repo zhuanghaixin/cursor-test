@@ -8,7 +8,7 @@ def bubble_sort(arr: list) -> list:
     """
     n = len(arr)
     # 遍历所有数组元素
-    for i in range(n):
+    for i in range (n):
         # 添加一个标志来检查是否有交换
         swapped = False 
         # Last i elements are already in place
