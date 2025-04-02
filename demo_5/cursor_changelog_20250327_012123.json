@@ -1,0 +1,612 @@
+[
+  {
+    "title": "Chat tabs, Custom modes & Sound notificationRolling"
+  },
+  {
+    "title": "Reliability, Keyboard Shortcuts & Early access opt-in"
+  },
+  {
+    "title": "Agent is ready and UI refresh"
+  },
+  {
+    "title": ".cursor/rules, Better Codebase Understanding, New Tab Model"
+  },
+  {
+    "title": "Agent Improvements, Yolo Mode, Cursor Tab Update"
+  },
+  {
+    "title": "New Composer UI, Agent, Commit Messages"
+  },
+  {
+    "title": "Composer History, @Lint Errors, VS Code 1.93.1",
+    "version": "1.93.1"
+  },
+  {
+    "title": "Cursor Tab Python Auto Import, Composer Improvements, Remote SSH to Mac Support"
+  },
+  {
+    "title": "New Chat UX, Default-On Composer, New Cursor Tab Model"
+  },
+  {
+    "title": "Faster Cursor Tab, More Composer improvements"
+  },
+  {
+    "title": "Copilot++ Chunked Streaming (beta), Composer improvements"
+  },
+  {
+    "title": "Composer (beta)"
+  },
+  {
+    "title": "Instant Applies, Docs Management"
+  },
+  {
+    "title": "Default-on Cursor Prediction, Remote Tunnels & More Robust SSH"
+  },
+  {
+    "title": "VS Code 1.89, New Cursor Prediction UI, Gemini 1.5 Flash, Copilot++ partial completion"
+  },
+  {
+    "title": "Networking Stability, Command-K Autoselect"
+  },
+  {
+    "title": "Improved Copilot++ UX, New GPT-4 Model"
+  },
+  {
+    "title": "Long Context Chat Beta"
+  },
+  {
+    "title": "Faster Copilot++, Claude"
+  },
+  {
+    "title": "Claude Support"
+  },
+  {
+    "title": "Polish"
+  },
+  {
+    "title": "VS Code 1.86.2",
+    "version": "1.86.2"
+  },
+  {
+    "title": "Linter, Interpreter Mode Updates"
+  },
+  {
+    "title": "AI Previews Beta"
+  },
+  {
+    "title": "Cmd-I to Heal"
+  },
+  {
+    "title": "Command-K Vision Support"
+  },
+  {
+    "title": "@Web, gpt-4-0125-preview"
+  },
+  {
+    "title": "New Model, Apply Button v2"
+  },
+  {
+    "title": "Cursor-Fast Model"
+  },
+  {
+    "title": "Dev Containers"
+  },
+  {
+    "title": "Better Remote Support"
+  },
+  {
+    "title": "Early Preview: Hold-cmd-tap-shift to Trigger AI Rewrite"
+  },
+  {
+    "title": "Aux Window Fixes"
+  },
+  {
+    "title": "VS Code 1.85.1",
+    "version": "1.85.1"
+  },
+  {
+    "title": "Multiple Command-K, Copilot++ UI"
+  },
+  {
+    "title": "Copilot++, @ previews, AI Review"
+  },
+  {
+    "title": "Interpreter Mode Windows Bug"
+  },
+  {
+    "title": "Copilot++ Improvements"
+  },
+  {
+    "title": "Make SSH Work on Xon.sh"
+  },
+  {
+    "title": "Minor Bug Fixes"
+  },
+  {
+    "title": "Fix Onboarding for Option Edits"
+  },
+  {
+    "title": "0.18.5 - Onboarding & Feedback",
+    "version": "0.18.5"
+  },
+  {
+    "title": "Smarter Followups"
+  },
+  {
+    "title": "Lowercase @ Folders Fix"
+  },
+  {
+    "title": "Better Context Chat, Faster Copilot++"
+  },
+  {
+    "title": "Image Support, Interpreter Mode Beta, @ Folders"
+  },
+  {
+    "title": "0.16.9-nightly - Interpreter Mode Windows Bug Fixes",
+    "version": "0.16.9-nightly"
+  },
+  {
+    "title": "GPT-V Windows Bug-fixes"
+  },
+  {
+    "title": "@folder"
+  },
+  {
+    "title": "Interpreter Mode Beta"
+  },
+  {
+    "title": "GPT-V Support"
+  },
+  {
+    "title": "Copilot++ improvements and VS Code 1.84.2",
+    "version": "1.84.2"
+  },
+  {
+    "title": "New upstream"
+  },
+  {
+    "title": "0.15.5 - Copilot++ improvements, Bug fixes",
+    "version": "0.15.5"
+  },
+  {
+    "title": "0.15.1 - New models, Copilot++ beta",
+    "version": "0.15.1"
+  },
+  {
+    "title": "Indexing fixes"
+  },
+  {
+    "title": "Pro++, Word-wrapping diffs, and more"
+  },
+  {
+    "title": "0.13.4 - New VS Code version",
+    "version": "0.13.4"
+  },
+  {
+    "title": "0.12.3 - Small fixes",
+    "version": "0.12.3"
+  },
+  {
+    "title": "Jupyter Import Fix"
+  },
+  {
+    "title": "Indexing, cmd-k in terminal, @git, /edit, bugfixes"
+  },
+  {
+    "title": "/edit in chat"
+  },
+  {
+    "title": "gitignore and search hotfix"
+  },
+  {
+    "title": "Stable Indexing v0.1"
+  },
+  {
+    "title": "Cmd-K in the terminal!"
+  },
+  {
+    "title": "More Stable Codebase Indexing"
+  },
+  {
+    "title": "0.11.8 - Patches",
+    "version": "0.11.8"
+  },
+  {
+    "title": "Inline Chat"
+  },
+  {
+    "title": "Cursor Python and Cursor Marketplace"
+  },
+  {
+    "title": "Re-enable Cursor Python"
+  },
+  {
+    "title": "Cursor Marketplace"
+  },
+  {
+    "title": "Fix bug in @ symbol ranking"
+  },
+  {
+    "title": "Quick question and @chat in cmd+k"
+  },
+  {
+    "title": "Fixed builtin cursor-python defaults"
+  },
+  {
+    "title": "0.10.3 - Reduce extension recommendations",
+    "version": "0.10.3"
+  },
+  {
+    "title": "Styling tweaks"
+  },
+  {
+    "title": "Better Docs Management, Staged Rollouts"
+  },
+  {
+    "title": "Styling"
+  },
+  {
+    "title": "@definitions in cmd+k"
+  },
+  {
+    "title": "New AI Project"
+  },
+  {
+    "title": "Hotfix for indexing"
+  },
+  {
+    "title": "Better State Management"
+  },
+  {
+    "title": "Hotfix Cmd-K unexpectedly outputting backticks"
+  },
+  {
+    "title": "Docs updates"
+  },
+  {
+    "title": "Cursor-Python LSP"
+  },
+  {
+    "title": "Staged Rollouts"
+  },
+  {
+    "title": "Hotfix Github Auth"
+  },
+  {
+    "title": "Hotfix for large persisted state"
+  },
+  {
+    "title": "Hotfix large persisted state"
+  },
+  {
+    "title": "Hotfix SSH"
+  },
+  {
+    "title": "Auditable codebase context, VS Code left bar"
+  },
+  {
+    "title": "Small refactor"
+  },
+  {
+    "title": "Email in settings"
+  },
+  {
+    "title": "Advanced Button"
+  },
+  {
+    "title": "Bug fix for people on language packs"
+  },
+  {
+    "title": "WSL Fixes"
+  },
+  {
+    "title": "Codebase indexing controls"
+  },
+  {
+    "title": "Cmd-k Followups, chat with large files, and more"
+  },
+  {
+    "title": "Activity bar can now be vertical"
+  },
+  {
+    "title": "Small fixes"
+  },
+  {
+    "title": "More robust SSH support"
+  },
+  {
+    "title": "Small improvements"
+  },
+  {
+    "title": "Patch cursor command on Windows"
+  },
+  {
+    "title": "0.7.10-nightly - Long-file experience",
+    "version": "0.7.10-nightly"
+  },
+  {
+    "title": "Followups in edits"
+  },
+  {
+    "title": "& 0.7.6-nightly - Fix cmd-k generate with large file",
+    "version": "0.7.6-nightly"
+  },
+  {
+    "title": "& 0.7.5-nightly - Fix: Cursor in the wrong place",
+    "version": "0.7.5-nightly"
+  },
+  {
+    "title": "In-editor chat"
+  },
+  {
+    "title": "Cmd-K fast mode"
+  },
+  {
+    "title": "0.6.6-nightly - New cmd-K keybindings",
+    "version": "0.6.6-nightly"
+  },
+  {
+    "title": "0.6.4-nightly - In-editor chat is back!",
+    "version": "0.6.4-nightly"
+  },
+  {
+    "title": "0.6.2-nightly - Improved linter",
+    "version": "0.6.2-nightly"
+  },
+  {
+    "title": "A copilot experience powered by gpt-4"
+  },
+  {
+    "title": "Performance hotfix"
+  },
+  {
+    "title": "Performance hotfix"
+  },
+  {
+    "title": "More robust extension handling"
+  },
+  {
+    "title": "Enterprise subscription support & misc fixes"
+  },
+  {
+    "title": "& 0.4.2 - Hotfixes",
+    "version": "0.4.2"
+  },
+  {
+    "title": "\"with codebase\" for all codebases!"
+  },
+  {
+    "title": "Jupyter CMD-k Context Building"
+  },
+  {
+    "title": "SSH and WSL fixes"
+  },
+  {
+    "title": "Bug fix"
+  },
+  {
+    "title": "Inline GPT-4 and full-file edits"
+  },
+  {
+    "title": "Updates"
+  },
+  {
+    "title": "Bug fixes"
+  },
+  {
+    "title": "Hotfixes"
+  },
+  {
+    "title": "Advanced context for codebase-wide chat"
+  },
+  {
+    "title": "hanging chat hotfix"
+  },
+  {
+    "title": "infinite chat loop hotfix"
+  },
+  {
+    "title": "Patches"
+  },
+  {
+    "title": "Small things!"
+  },
+  {
+    "title": "Patch for WSL/SSH (Search and Extensions)"
+  },
+  {
+    "title": "Patch for Cmd-k Generates"
+  },
+  {
+    "title": "Experimental: interface agent!"
+  },
+  {
+    "title": "ARM Windows Cmd-Shift-F"
+  },
+  {
+    "title": "Improvements to many features, Fixes to Python"
+  },
+  {
+    "title": "Agents, new docs"
+  },
+  {
+    "title": "Fix for Cmd+K"
+  },
+  {
+    "title": "Fix for Cmd+Shift+F (Mac ARM)"
+  },
+  {
+    "title": "Hotfix for \"with codebase\""
+  },
+  {
+    "title": "Release for Linux"
+  },
+  {
+    "title": "New inline edits"
+  },
+  {
+    "title": "More fixes"
+  },
+  {
+    "title": "Hotfixes"
+  },
+  {
+    "title": "Hotfix for Chat"
+  },
+  {
+    "title": "Chat v2"
+  },
+  {
+    "title": "Diffs in AI linter feedback"
+  },
+  {
+    "title": "Azure Support"
+  },
+  {
+    "title": "Small improvements"
+  },
+  {
+    "title": "Hotfix for chat focus"
+  },
+  {
+    "title": "Show the AI documentation"
+  },
+  {
+    "title": "& 0.2.29 - Codebase Context fixes",
+    "version": "0.2.29"
+  },
+  {
+    "title": "Codebase Context v2"
+  },
+  {
+    "title": "Codebase Context v1"
+  },
+  {
+    "title": "v0.2.25 - Hot-fix for extensions (2023-06-03)",
+    "version": "0.2.25",
+    "release_date": "2023-06-03"
+  },
+  {
+    "title": "v0.2.24 - Minor fixes (2023-06-02)",
+    "version": "0.2.24",
+    "release_date": "2023-06-02"
+  },
+  {
+    "title": "v0.2.23 - AI Linting (2023-06-01)",
+    "version": "0.2.23",
+    "release_date": "2023-06-01"
+  },
+  {
+    "title": "v0.2.18 - Upgrades to GPT-4 and Please give us feedback!! (2023-05-20)",
+    "version": "0.2.18",
+    "release_date": "2023-05-20"
+  },
+  {
+    "title": "v0.2.17 - Fixes! (2023-05-018)",
+    "version": "0.2.17"
+  },
+  {
+    "title": "v0.2.16 - Terminal Debugger, and our biggest bug bash yet (v0.2.12)",
+    "version": "0.2.16"
+  },
+  {
+    "title": "v0.2.11 - Enhanced Chat Experience (2023-05-09)",
+    "version": "0.2.11",
+    "release_date": "2023-05-09"
+  },
+  {
+    "title": "v0.2.10 - Crucial Bug Fixes (2023-05-06)",
+    "version": "0.2.10",
+    "release_date": "2023-05-06"
+  },
+  {
+    "title": "v0.2.9 - Enhanced Features & Improvements (2023-05-04)",
+    "version": "0.2.9",
+    "release_date": "2023-05-04"
+  },
+  {
+    "title": "v0.2.8 - Multi-File Diffs & Remote SSH (2023-04-29)",
+    "version": "0.2.8",
+    "release_date": "2023-04-29"
+  },
+  {
+    "title": "v0.2.6 - GPT-4 & Project Generation (2023-04-19)",
+    "version": "0.2.6",
+    "release_date": "2023-04-19"
+  },
+  {
+    "title": "v0.2.5 - Scroll Bar Hotfix (2023-04-17)",
+    "version": "0.2.5",
+    "release_date": "2023-04-17"
+  },
+  {
+    "title": "v0.2.4 - Chat Scrolling & Ghost Mode (2023-04-16)",
+    "version": "0.2.4",
+    "release_date": "2023-04-16"
+  },
+  {
+    "title": "v0.2.3 - Enhanced Error Handling (2023-04-14)",
+    "version": "0.2.3",
+    "release_date": "2023-04-14"
+  },
+  {
+    "title": "v0.2.2 - Bug Fixes Galore (2023-04-07)",
+    "version": "0.2.2",
+    "release_date": "2023-04-07"
+  },
+  {
+    "title": "v0.2.1 - More Bug Fixes (2023-04-06)",
+    "version": "0.2.1",
+    "release_date": "2023-04-06"
+  },
+  {
+    "title": "v0.2.0 - Introducing Cursor 0.2.0! (2023-04-06)",
+    "version": "0.2.0",
+    "release_date": "2023-04-06"
+  },
+  {
+    "title": "v0.1.12 (2023-03-30)",
+    "version": "0.1.12",
+    "release_date": "2023-03-30"
+  },
+  {
+    "title": "v0.1.11 (2023-03-28)",
+    "version": "0.1.11",
+    "release_date": "2023-03-28"
+  },
+  {
+    "title": "v0.1.10 (2023-03-28)",
+    "version": "0.1.10",
+    "release_date": "2023-03-28"
+  },
+  {
+    "title": "v0.1.9 (2023-03-27)",
+    "version": "0.1.9",
+    "release_date": "2023-03-27"
+  },
+  {
+    "title": "v0.1.7 (2023-03-25)",
+    "version": "0.1.7",
+    "release_date": "2023-03-25"
+  },
+  {
+    "title": "v0.1.6 (2023-03-24)",
+    "version": "0.1.6",
+    "release_date": "2023-03-24"
+  },
+  {
+    "title": "v0.1.5 (2023-03-23)",
+    "version": "0.1.5",
+    "release_date": "2023-03-23"
+  },
+  {
+    "title": "v0.1.2-0.1.3 (2023-03-18)",
+    "version": "0.1.2",
+    "release_date": "2023-03-18"
+  },
+  {
+    "title": "v0.0.37 (2023-03-14)",
+    "version": "0.0.37",
+    "release_date": "2023-03-14"
+  }
+]
