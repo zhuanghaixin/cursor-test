@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抖音风格3D官网</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">抖音风格<span>3D</span></div>
+        <nav class="nav">
+            <ul>
+                <li><a href="#" class="active">首页</a></li>
+                <li><a href="#">产品</a></li>
+                <li><a href="#">服务</a></li>
+                <li><a href="#">关于我们</a></li>
+                <li><a href="#">联系我们</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="glitch-text">创新科技<span>未来</span></h1>
+            <p>探索3D世界的无限可能，让创意与技术完美融合</p>
+            <div class="btn-group">
+                <button class="douyin-btn primary">立即体验</button>
+                <button class="douyin-btn secondary">了解更多</button>
+            </div>
+        </div>
+        <div class="carousel-3d-container">
+            <div class="carousel-3d">
+                <div class="carousel-item" data-index="0">首页</div>
+                <div class="carousel-item" data-index="1">关于</div>
+                <div class="carousel-item" data-index="2">产品</div>
+                <div class="carousel-item" data-index="3">服务</div>
+                <div class="carousel-item" data-index="4">联系我们</div>
+                <div class="carousel-item" data-index="5">底部信息</div>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-control prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-control next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2 class="section-title">我们的特色</h2>
+        <div class="feature-cards">
+            <div class="feature-card">
+                <div class="icon"><i class="fas fa-vr-cardboard"></i></div>
+                <h3>3D视觉体验</h3>
+                <p>沉浸式的3D视觉效果，带来全新的网页浏览体验</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>响应式设计</h3>
+                <p>完美适配各种设备，随时随地享受极致体验</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon"><i class="fas fa-paint-brush"></i></div>
+                <h3>时尚UI设计</h3>
+                <p>抖音风格的现代UI设计，引领潮流</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="cta-content">
+            <h2>准备好开始了吗？</h2>
+            <p>立即加入我们，探索更多可能性</p>
+            <button class="douyin-btn glow">立即加入</button>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <p>我们致力于提供最前沿的3D网页设计和开发服务</p>
+            </div>
+            <div class="footer-section">
+                <h3>联系方式</h3>
+                <p><i class="fas fa-envelope"></i> contact@example.com</p>
+                <p><i class="fas fa-phone"></i> 123-456-7890</p>
+            </div>
+            <div class="footer-section">
+                <h3>关注我们</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 抖音风格3D官网. 保留所有权利</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('.mobile-toggle').addEventListener('click', function () {
+            document.querySelector('.nav').classList.toggle('active');
+        });
+
+        // 3D轮播图功能
+        const carousel = document.querySelector('.carousel-3d');
+        const items = document.querySelectorAll('.carousel-item');
+        const prevBtn = document.querySelector('.carousel-control.prev');
+        const nextBtn = document.querySelector('.carousel-control.next');
+        const totalItems = items.length;
+        let currentIndex = 0;
+        let autoplayInterval;
+        let isAnimating = false; // 添加动画状态标志，防止快速点击导致动画混乱
+
+        // 初始化轮播图位置
+        function initCarousel() {
+            items.forEach((item, index) => {
+                // 计算每个项目的角度
+                const angle = (360 / totalItems) * index;
+                // 计算半径 (轮播图的半径)
+                const radius = 250;
+                // 设置每个项目的3D位置
+                item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+            });
+            updateCarousel();
+        }
+
+        // 更新轮播图位置
+        function updateCarousel() {
+            // 计算当前角度
+            const angle = (360 / totalItems) * currentIndex * -1;
+            // 应用旋转
+            carousel.style.transform = `rotateY(${angle}deg)`;
+        }
+
+        // 下一个项目
+        function nextItem() {
+            // 如果正在动画中，则不执行
+            if (isAnimating) return;
+
+            // 设置动画状态为true
+            isAnimating = true;
+
+            // 更新索引，实现无限循环
+            currentIndex = (currentIndex + 1) % totalItems;
+
+            // 如果是从最后一个到第一个的过渡，使用特殊处理
+            if (currentIndex === 0) {
+                // 先移除过渡效果
+                carousel.style.transition = 'none';
+                // 先旋转到一个接近最后一个项目的位置，但比最后一个项目再多旋转一点
+                carousel.style.transform = `rotateY(${(360 / totalItems) * (totalItems + 1) * -1}deg)`;
+
+                // 强制浏览器重绘
+                void carousel.offsetWidth;
+
+                // 恢复过渡效果，使用统一的贝塞尔曲线
+                carousel.style.transition = 'transform 1s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                // 然后旋转到第一个项目的位置
+                setTimeout(() => {
+                    updateCarousel();
+                }, 10);
+            } else {
+                // 正常更新轮播图位置
+                carousel.style.transition = 'transform 1s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                updateCarousel();
+            }
+
+            // 动画完成后重置状态
+            setTimeout(() => {
+                isAnimating = false;
+            }, 1000); // 与CSS中的transition时间一致
+        }
+
+        // 上一个项目
+        function prevItem() {
+            // 如果正在动画中，则不执行
+            if (isAnimating) return;
+
+            // 设置动画状态为true
+            isAnimating = true;
+
+            // 更新索引，实现无限循环
+            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+
+            // 如果是从第一个到最后一个的过渡，使用特殊处理
+            if (currentIndex === totalItems - 1) {
+                // 先移除过渡效果
+                carousel.style.transition = 'none';
+                // 先旋转到一个接近第一个项目的位置，但比第一个项目再少旋转一点
+                carousel.style.transform = `rotateY(${(360 / totalItems) * -1 + 360}deg)`;
+
+                // 强制浏览器重绘
+                void carousel.offsetWidth;
+
+                // 恢复过渡效果，使用统一的贝塞尔曲线
+                carousel.style.transition = 'transform 1s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                // 然后旋转到最后一个项目的位置
+                setTimeout(() => {
+                    updateCarousel();
+                }, 10);
+            } else {
+                // 正常更新轮播图位置
+                carousel.style.transition = 'transform 1s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                updateCarousel();
+            }
+
+            // 动画完成后重置状态
+            setTimeout(() => {
+                isAnimating = false;
+            }, 1000); // 与CSS中的transition时间一致
+        }
+
+        // 添加事件监听器
+        nextBtn.addEventListener('click', () => {
+            clearInterval(autoplayInterval);
+            nextItem();
+            startAutoplay();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            clearInterval(autoplayInterval);
+            prevItem();
+            startAutoplay();
+        });
+
+        // 添加过渡结束事件监听器
+        carousel.addEventListener('transitionend', () => {
+            // 过渡结束后重置动画状态
+            isAnimating = false;
+            // 确保transition属性已正确设置，使用统一的贝塞尔曲线
+            carousel.style.transition = 'transform 1s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        });
+
+        // 自动播放
+        function startAutoplay() {
+            clearInterval(autoplayInterval);
+            autoplayInterval = setInterval(() => {
+                if (!isAnimating) {
+                    nextItem();
+                }
+            }, 5000);
+        }
+
+        // 初始化轮播图
+        initCarousel();
+        startAutoplay();
+    </script>
+</body>
+
+</html>
